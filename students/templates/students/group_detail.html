@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Группа {{ group_name }} | INTC Portal{% endblock %}
+
+{% block content %}
+<a href="{% url 'student_list' %}" class="breadcrumb animate-fade stagger-1">
+    <i class="fa-solid fa-arrow-left"></i> Назад к списку
+</a>
+
+<div class="page-header animate-fade stagger-2">
+    <h1 class="page-title">Группа {{ group_name }}</h1>
+    <p class="page-subtitle">Управление академическим потоком студентов</p>
+</div>
+
+<div class="glass-card animate-fade stagger-3">
+    {% if students %}
+    <div class="student-list">
+        {% for student in students %}
+        <a href="{% url 'student_detail' student.pk %}" class="student-row">
+            <div class="student-avatar">
+                {{ student.first_name|first }}{{ student.last_name|first }}
+            </div>
+            <div>
+                <div class="student-name">{{ student.first_name }} {{ student.last_name }}</div>
+                <div class="student-meta">Студент портала</div>
+            </div>
+            <div class="student-badge">
+                <i class="fa-solid fa-cake-candles"></i> {{ student.age }} лет
+            </div>
+            <div class="student-action">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-box">
+        <i class="fa-solid fa-users-slash empty-icon"></i>
+        <h3>Пустая группа</h3>
+        <p>В этой группе пока нет зарегистрированных студентов.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

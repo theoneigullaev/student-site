@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль | {{ student.first_name }} {{ student.last_name }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'group_detail' student.group %}" class="breadcrumb animate-fade stagger-1">
+    <i class="fa-solid fa-arrow-left"></i> Назад в группу {{ student.group }}
+</a>
+
+<div class="glass-card form-card animate-fade stagger-2" style="padding: 2.5rem 2.5rem 3rem;">
+
+    <div class="profile-cover">
+        <div class="profile-photo-wrapper">
+            {% if student.photo %}
+            <img src="{{ student.photo.url }}" alt="Фото {{ student.first_name }}">
+            {% else %}
+            <div class="placeholder">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="profile-body">
+        <h1 class="profile-name">{{ student.first_name }} {{ student.last_name }}</h1>
+        <p
+            style="color: var(--emerald-600); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.85rem;">
+            Студент портала <i class="fa-solid fa-circle-check" style="margin-left: 0.2rem;"></i>
+        </p>
+
+        <div class="profile-stats">
+            <div class="stat-box">
+                <span class="stat-label">Возраст</span>
+                <span class="stat-value">{{ student.age }} лет</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Группа</span>
+                <span class="stat-value">
+                    <div class="badge">{{ student.group }}</div>
+                </span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Статус</span>
+                <span class="stat-value" style="color: var(--emerald-500);">Активен</span>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{% url 'edit_student' student.pk %}" class="btn">
+                <i class="fa-solid fa-pen-to-square"></i> Редактировать
+            </a>
+            <a href="{% url 'delete_student' student.pk %}" class="btn btn-danger" style="margin-left: auto;"
+                onclick="return confirm('Вы уверены, что хотите навсегда удалить студента {{ student.first_name }}?');">
+                <i class="fa-solid fa-trash"></i> Удалить
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

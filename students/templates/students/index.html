@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Академические группы | INTC Portal{% endblock %}
+
+{% block content %}
+<div class="page-header animate-fade stagger-1">
+    <h1 class="page-title">Учебные группы</h1>
+    <p class="page-subtitle">Визуализируйте и управляйте академическими потоками колледжа с помощью смарт-интерфейса.
+    </p>
+</div>
+
+{% if groups %}
+<div class="group-grid animate-fade stagger-2">
+    {% for group in groups %}
+    <a href="{% url 'group_detail' group %}" class="group-card">
+        <div class="group-header">
+            <div class="group-icon">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+        </div>
+        <div class="group-content">
+            <h3>Группа {{ group }}</h3>
+            <p>Очное </p>
+        </div>
+        <div class="group-arrow">
+            <i class="fa-solid fa-arrow-right"></i>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-box animate-fade stagger-2">
+    <i class="fa-solid fa-folder-open empty-icon"></i>
+    <h3>Группы не найдены</h3>
+    <p>Создайте первого студента, чтобы автоматически сформировать группу.</p>
+    <a href="{% url 'add_student' %}" class="btn" style="margin-top: 1.5rem;">
+        <i class="fa-solid fa-plus"></i> Добавить студента
+    </a>
+</div>
+{% endif %}
+{% endblock %}

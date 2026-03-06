@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация студента | INTC Portal {% endblock %}
+
+{% block content %}
+<a href="{% url 'student_list' %}" class="breadcrumb animate-fade stagger-1">
+    <i class="fa-solid fa-arrow-left"></i> На главную
+</a>
+
+<div class="glass-card form-card animate-fade stagger-2">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <div class="group-icon" style="margin: 0 auto 1rem; width: 64px; height: 64px; font-size: 1.75rem;">
+            <i class="fa-solid fa-user-plus"></i>
+        </div>
+        <h1 class="page-title" style="font-size: 2rem; margin-bottom: 0.5rem;">Новый студент</h1>
+        <p class="page-subtitle" style="font-size: 0.95rem;">Заполните профильную информацию для зачисления.</p>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+            <div class="form-error">
+                <i class="fa-solid fa-circle-exclamation"></i> {{ field.errors.0 }}
+            </div>
+            {% endif %}
+            {% if field.help_text %}
+            <span class="form-help">{{ field.help_text }}</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn" style="width: 100%;">
+                <i class="fa-solid fa-check"></i> Сохранить профиль
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

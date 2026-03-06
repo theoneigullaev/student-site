@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DA College Portal{% endblock %}</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="{% url 'student_list' %}" class="navbar-brand">
+                <i class="fa-solid fa-leaf"></i>
+                INTC Portal
+            </a>
+            <div class="nav-links">
+                {% if user.is_authenticated %}
+                <a href="{% url 'student_list' %}" class="nav-link"><i class="fa-solid fa-layer-group"></i> Группы</a>
+                <a href="{% url 'add_student' %}" class="nav-link active-add"><i class="fa-solid fa-user-plus"></i>
+                    Добавить</a>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-nav-logout"><i class="fa-solid fa-right-from-bracket"></i>
+                        Выйти</button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}" class="nav-link">Вход</a>
+                <a href="{% url 'register' %}" class="btn"><i class="fa-solid fa-user-check"></i> Регистрация</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+</body>
+
+</html>
